@@ -17,7 +17,7 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
  * @author Nickolas Bradham
  *
  */
-final class Forcer implements NativeKeyListener {
+public final class Forcer implements NativeKeyListener {
 
 	private static final short BOX_X = 680, BOX_Y = 120, BOX_W = 750, BOX_H = 610, FAIL_X = 640, FAIL_Y = 450;
 	private final Robot ro;
