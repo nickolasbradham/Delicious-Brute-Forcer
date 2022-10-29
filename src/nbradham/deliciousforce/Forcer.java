@@ -11,6 +11,12 @@ import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
+/**
+ * Handles everything.
+ * 
+ * @author Nickolas Bradham
+ *
+ */
 final class Forcer implements NativeKeyListener {
 
 	private static final short BOX_X = 680, BOX_Y = 120, BOX_W = 750, BOX_H = 610, FAIL_X = 640, FAIL_Y = 450;
@@ -18,10 +24,24 @@ final class Forcer implements NativeKeyListener {
 	private final Object lock = new Object();
 	private boolean running = true, clicking = false;
 
+	/**
+	 * Constructs a new Forcer.
+	 * 
+	 * @throws AWTException Thrown by {@link Robot#Robot()}.
+	 */
 	private Forcer() throws AWTException {
 		ro = new Robot();
 	}
 
+	/**
+	 * Handles main execution loop.
+	 * 
+	 * @throws NativeHookException  Thrown by
+	 *                              {@link GlobalScreen#registerNativeHook()} and
+	 *                              {@link GlobalScreen#unregisterNativeHook()}.
+	 * @throws InterruptedException Thrown by {@link #wait()} and
+	 *                              {@link #click(int, int)}.
+	 */
 	private void start() throws NativeHookException, InterruptedException {
 		GlobalScreen.registerNativeHook();
 		GlobalScreen.addNativeKeyListener(this);
@@ -39,6 +59,13 @@ final class Forcer implements NativeKeyListener {
 		GlobalScreen.unregisterNativeHook();
 	}
 
+	/**
+	 * Moves cursor to (x, y) and clicks.
+	 * 
+	 * @param x The x coordinate.
+	 * @param y The y coordinate.
+	 * @throws InterruptedException Thrown by {@link Thread#sleep(long)}.
+	 */
 	private void click(int x, int y) throws InterruptedException {
 		ro.mouseMove(x, y);
 		ro.mousePress(InputEvent.BUTTON1_DOWN_MASK);
@@ -61,6 +88,14 @@ final class Forcer implements NativeKeyListener {
 		}
 	}
 
+	/**
+	 * Constructs and starts a Forcer instance.
+	 * 
+	 * @param args Ignored.
+	 * @throws NativeHookException  Thrown by {@link #start()}.
+	 * @throws InterruptedException Thrown by {@link #start()}.
+	 * @throws AWTException         Thrown by {@link #Forcer()}.
+	 */
 	public static void main(String[] args) throws NativeHookException, InterruptedException, AWTException {
 		new Forcer().start();
 	}
